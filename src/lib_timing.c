@@ -746,6 +746,8 @@ benchmp_interval(void* _state)
 			if (state->cleanup) {
 				if (benchmp_sigchld_handler == SIG_DFL)
 					signal(SIGCHLD, SIG_DFL);
+				/* FIXME: avoid sigterm that would be triggered prior to here */
+				signal(SIGTERM, SIG_IGN);
 				(*state->cleanup)(0, state->cookie);
 			}
 
